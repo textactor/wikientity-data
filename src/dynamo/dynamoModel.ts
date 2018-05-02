@@ -224,14 +224,21 @@ export class DynamoModel<ID, T> {
     protected beforeUpdating(data: RepUpdateData<T>): RepUpdateData<T> {
         data = { ...<any>data };
         data.item = this.prepareData(data.item);
+
         return data;
     }
 
     protected prepareData(data: T): T {
         data = { ...<any>data };
-        for (let prop of Object.keys(data)) {
+        const item = data as any;
+        for (let prop of Object.keys(item)) {
             if (this.fields.indexOf(prop) < 0) {
-                delete (<any>data)[prop];
+                delete item[prop];
+                continue
+            }
+
+            if (~[null, undefined, ''].indexOf(item[prop])) {
+                delete item[prop];
             }
         }
         return data;

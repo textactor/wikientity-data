@@ -14,7 +14,9 @@
     "postversion": "git push --follow-tags",
     "prepublishOnly": "npm run tsc && npm run clean-test-code",
     "clean": "rimraf ./lib && rimraf ./types",
-    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts"
+    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts",
+    "dev": "yarn remove @textactor/wikientity-domain && yarn link @textactor/wikientity-domain",
+    "prod": "yarn unlink @textactor/wikientity-domain && yarn add @textactor/wikientity-domain"
   },
   "engines": {
     "node": ">=8.0.0"
