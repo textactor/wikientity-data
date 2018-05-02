@@ -1,0 +1,49 @@
+{
+  "name": "@textactor/wikientity-data",
+  "version": "0.1.0",
+  "description": "WikiEntity data module",
+  "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "pretest": "npm run clean && npm run tsc",
+    "test": "ava --no-cache --verbose lib/**/*.test.js",
+    "posttest": "npm run clean-test-code",
+    "tsc": "tsc",
+    "tscw": "tsc -w",
+    "preversion": "npm run tsc",
+    "postversion": "git push --follow-tags",
+    "prepublishOnly": "npm run tsc && npm run clean-test-code",
+    "clean": "rimraf ./lib && rimraf ./types",
+    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/textactor/wikientity-data.git"
+  },
+  "keywords": [
+    "wikientity",
+    "data",
+    "textactor"
+  ],
+  "author": "Dumitru Cantea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/textactor/wikientity-data/issues"
+  },
+  "homepage": "https://github.com/textactor/wikientity-data#readme",
+  "devDependencies": {
+    "@types/joi": "^13.0.7",
+    "@types/node": "latest",
+    "ava": "^0.23.0",
+    "rimraf": "^2.6.2",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@textactor/domain": "^0.1.4",
+    "dynamodb": "^1.1.1",
+    "joi": "^13.2.0"
+  }
+}
