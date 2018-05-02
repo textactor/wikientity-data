@@ -52,6 +52,12 @@
     slugify "^1.2.9"
     standard-text "^0.1.1"
 
+"@textactor/wikientity-domain@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@textactor/wikientity-domain/-/wikientity-domain-0.1.0.tgz#143f4b951ec09a41e1caf51abeee8add8841605f"
+  dependencies:
+    "@textactor/domain" "^0.1.4"
+
 "@types/joi@^13.0.7":
   version "13.0.8"
   resolved "https://registry.yarnpkg.com/@types/joi/-/joi-13.0.8.tgz#224d5da224036f0c15b35e6980ba9de63b8ea374"
