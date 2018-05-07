@@ -48,7 +48,7 @@ const OPTIONS: DynamoModelOptions = {
         wikiDataId: Joi.string().regex(WIKI_DATA_ID_REG).required(),
         wikiPageId: Joi.number().integer(),
         wikiPageTitle: Joi.string().min(2).max(200),
-        type: Joi.valid('EVENT', 'ORG', 'PERSON', 'PLACE', 'PRODUCT'),
+        type: Joi.valid('EVENT', 'ORG', 'PERSON', 'PLACE', 'PRODUCT', 'WORK'),
         types: Joi.array().items(Joi.string().min(2).max(50)).unique().max(20),
         description: Joi.string().max(200),
         about: Joi.string().max(800),

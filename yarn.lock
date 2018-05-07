@@ -44,20 +44,6 @@
   dependencies:
     arrify "^1.0.1"
 
-"@textactor/domain@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@textactor/domain/-/domain-0.1.4.tgz#6dc901d7442ed83e64866578a729cf386e288471"
-  dependencies:
-    atonic "^1.0.4"
-    slugify "^1.2.9"
-    standard-text "^0.1.1"
-
-"@textactor/wikientity-domain@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@textactor/wikientity-domain/-/wikientity-domain-0.1.0.tgz#143f4b951ec09a41e1caf51abeee8add8841605f"
-  dependencies:
-    "@textactor/domain" "^0.1.4"
-
 "@types/joi@^13.0.7":
   version "13.0.8"
   resolved "https://registry.yarnpkg.com/@types/joi/-/joi-13.0.8.tgz#224d5da224036f0c15b35e6980ba9de63b8ea374"
@@ -173,10 +159,6 @@ async-each@^1.0.0:
 async@1.5.x:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
-
-atonic@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/atonic/-/atonic-1.0.4.tgz#7db3f216070abb68660f18122a380903e09d27c7"
 
 auto-bind@^1.1.0:
   version "1.2.0"
@@ -2420,10 +2402,6 @@ slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
 
-slugify@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.2.9.tgz#c3d518f5136b3c69345d5d0bbbcde7412b5694aa"
-
 sort-keys@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-2.0.0.tgz#658535584861ec97d730d6cf41822e1f56684128"
@@ -2469,10 +2447,6 @@ sprintf-js@~1.0.2:
 stack-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-1.0.1.tgz#d4f33ab54e8e38778b0ca5cfd3b3afb12db68620"
-
-standard-text@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/standard-text/-/standard-text-0.1.1.tgz#e5a4fbbdd6a7fed7df175f5ea0220c49c573a188"
 
 string-width@^1.0.1, string-width@^1.0.2:
   version "1.0.2"
