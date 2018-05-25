@@ -1,6 +1,6 @@
 {
   "name": "@textactor/wikientity-data",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "WikiEntity data module",
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -14,9 +14,7 @@
     "postversion": "git push --follow-tags",
     "prepublishOnly": "npm run tsc && npm run clean-test-code",
     "clean": "rimraf ./lib && rimraf ./types",
-    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts",
-    "dev": "yarn remove @textactor/domain && yarn remove @textactor/wikientity-domain && yarn link @textactor/domain && yarn link @textactor/wikientity-domain",
-    "prod": "yarn unlink @textactor/domain && yarn unlink @textactor/wikientity-domain && yarn add @textactor/domain && yarn add @textactor/wikientity-domain"
+    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -44,6 +42,8 @@
     "typescript": "latest"
   },
   "dependencies": {
+    "@textactor/domain": "^0.1.5",
+    "@textactor/wikientity-domain": "^0.1.1",
     "dynamodb": "^1.1.1",
     "joi": "^13.2.0"
   }
