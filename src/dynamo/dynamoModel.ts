@@ -118,7 +118,7 @@ export class DynamoModel<ID, T extends { id: ID }> {
         return new Promise((resolve, reject) => {
             const params = formatParams();
             params.expected = {};
-            params.expected[this.options.hashKey] = (<any>data.set)[this.options.hashKey];
+            params.expected[this.options.hashKey] = data.id || (<any>data.set)[this.options.hashKey];
             if (this.options.rangeKey !== undefined) {
                 params.expected[this.options.rangeKey] = (<any>data.set)[this.options.rangeKey];
             }
