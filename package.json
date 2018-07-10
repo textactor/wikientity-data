@@ -1,6 +1,6 @@
 {
   "name": "@textactor/wikientity-data",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "WikiEntity data module",
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -42,6 +42,8 @@
     "typescript": "latest"
   },
   "dependencies": {
+    "@textactor/domain": "^0.1.6",
+    "@textactor/wikientity-domain": "^0.1.2",
     "dynamodb": "^1.1.1",
     "joi": "^13.2.0"
   }
