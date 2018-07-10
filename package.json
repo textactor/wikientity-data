@@ -42,8 +42,6 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@textactor/domain": "^0.1.5",
-    "@textactor/wikientity-domain": "^0.1.1",
     "dynamodb": "^1.1.1",
     "joi": "^13.2.0"
   }

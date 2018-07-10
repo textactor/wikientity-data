@@ -11,7 +11,7 @@ export interface DynamoModelOptions {
     indexes?: { hashKey?: string, rangeKey?: string, type: 'local' | 'global', name: string, projection?: any }[]
 }
 
-export class DynamoModel<ID, T> {
+export class DynamoModel<ID, T extends { id: ID }> {
     protected Model: any
     private fields: string[]
     constructor(private options: DynamoModelOptions, dynamodb?: any) {
@@ -43,13 +43,16 @@ export class DynamoModel<ID, T> {
         });
     }
 
-    getById(id: ID): Promise<T> {
+    getById(id: ID): Promise<T | null> {
         return new Promise((resolve, reject) => {
             const params = formatParams();
 
             this.Model.get(id, params, (error: Error, result: any) => {
                 if (error) {
                     return reject(error);
+                }
+                if (!result) {
+                    return resolve(null);
                 }
                 resolve(this.transformData(result));
             });
@@ -110,17 +113,17 @@ export class DynamoModel<ID, T> {
         });
     }
 
-    update(data: RepUpdateData<T>): Promise<T> {
+    update(data: RepUpdateData<ID, T>): Promise<T> {
         data = this.beforeUpdating(data);
         return new Promise((resolve, reject) => {
             const params = formatParams();
             params.expected = {};
-            params.expected[this.options.hashKey] = (<any>data.item)[this.options.hashKey];
+            params.expected[this.options.hashKey] = (<any>data.set)[this.options.hashKey];
             if (this.options.rangeKey !== undefined) {
-                params.expected[this.options.rangeKey] = (<any>data.item)[this.options.rangeKey];
+                params.expected[this.options.rangeKey] = (<any>data.set)[this.options.rangeKey];
             }
 
-            let updateItem: any = { ...(data.item as any) };
+            let updateItem: any = { ...(data.set as any), id: data.id };
             if (data.delete && data.delete.length) {
                 data.delete.forEach(item => updateItem[item] = null);
             }
@@ -138,7 +141,7 @@ export class DynamoModel<ID, T> {
         return this.create(item)
             .catch(error => {
                 if (error.code === 'ConditionalCheckFailedException') {
-                    return this.update({ item });
+                    return this.update({ id: item.id, set: item });
                 }
                 return Promise.reject(error);
             });
@@ -193,7 +196,7 @@ export class DynamoModel<ID, T> {
                 }
 
                 if (!result) {
-                    return resolve(null);
+                    return resolve({ count: 0 });
                 }
 
                 const data: DynamoQueryResult<T> = {
@@ -210,25 +213,24 @@ export class DynamoModel<ID, T> {
     }
 
     protected transformData(data: any): T {
-        if (!data) {
-            return null;
-        }
         const report = <T>data.get();
         return report;
     }
 
     protected beforeCreating(data: T): T {
-        return this.prepareData(data);
+        return this.prepareData(data) as T;
     }
 
-    protected beforeUpdating(data: RepUpdateData<T>): RepUpdateData<T> {
+    protected beforeUpdating(data: RepUpdateData<ID, T>): RepUpdateData<ID, T> {
         data = { ...<any>data };
-        data.item = this.prepareData(data.item);
+        if (data.set) {
+            data.set = this.prepareData(data.set);
+        }
 
         return data;
     }
 
-    protected prepareData(data: T): T {
+    protected prepareData(data: Partial<T>): Partial<T> {
         data = { ...<any>data };
         const item = data as any;
         for (let prop of Object.keys(item)) {

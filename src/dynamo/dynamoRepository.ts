@@ -1,10 +1,10 @@
 import { IRepository, RepUpdateData } from "@textactor/domain";
 import { DynamoModel } from "./dynamoModel";
 
-export class DynamoRepository<ID, T> implements IRepository<ID, T> {
+export class DynamoRepository<ID, T extends { id: ID }> implements IRepository<ID, T> {
     constructor(protected model: DynamoModel<ID, T>) { }
 
-    getById(id: ID): Promise<T> {
+    getById(id: ID) {
         return this.model.getById(id);
     }
     getByIds(ids: ID[]): Promise<T[]> {
@@ -19,7 +19,7 @@ export class DynamoRepository<ID, T> implements IRepository<ID, T> {
     create(data: T): Promise<T> {
         return this.model.create(data);
     }
-    update(data: RepUpdateData<T>): Promise<T> {
+    update(data: RepUpdateData<ID, T>): Promise<T> {
         return this.model.update(data);
     }
 }

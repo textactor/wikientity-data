@@ -18,11 +18,13 @@ export class WikiEntityModel extends DynamoModel<string, WikiEntity> {
         return data;
     }
 
-    protected beforeUpdating(data: RepUpdateData<WikiEntity>): RepUpdateData<WikiEntity> {
+    protected beforeUpdating(data: RepUpdateData<string, WikiEntity>) {
         data = super.beforeUpdating(data);
-        delete data.item.createdAt;
-        delete data.item.lang;
-        data.item.updatedAt = data.item.updatedAt || Math.round(Date.now() / 1000);
+        if (data.set) {
+            delete data.set.createdAt;
+            delete data.set.lang;
+            data.set.updatedAt = data.set.updatedAt || Math.round(Date.now() / 1000);
+        }
 
         return data;
     }
@@ -54,6 +56,7 @@ const OPTIONS: DynamoModelOptions = {
         about: Joi.string().max(800),
         categories: Joi.array().items(Joi.string().min(2).max(250)).unique().max(10),
         data: Joi.object().pattern(/^P\d+$/, Joi.array().items(Joi.string().min(1).max(500).required()).min(1).max(10)),
+        countLinks: Joi.number().integer().min(1).max(500).required(),
 
         createdAt: Joi.number().integer().required(),
         updatedAt: Joi.number().integer().required(),
