@@ -1,12 +1,14 @@
-import { DynamoModel, DynamoModelOptions } from "./dynamo-model";
+import { DynamoModel, DynamoModelOptions, ModelOptions, buildDynamoOptions } from "./dynamo-model";
 import { WikiEntity } from "@textactor/wikientity-domain";
 import * as Joi from 'joi';
 import { LANG_REG, WIKI_DATA_ID_REG } from "../helpers";
 import { RepUpdateData } from "@textactor/domain";
 
 export class WikiEntityModel extends DynamoModel<string, WikiEntity> {
-    constructor(dynamodb?: any) {
-        super(OPTIONS, dynamodb);
+    constructor(options?: ModelOptions) {
+        options = options || {};
+
+        super(buildDynamoOptions(OPTIONS, options), options.dynamodb);
     }
 
     protected beforeCreating(data: WikiEntity): WikiEntity {
@@ -39,7 +41,7 @@ export class WikiEntityModel extends DynamoModel<string, WikiEntity> {
 
 const OPTIONS: DynamoModelOptions = {
     name: 'textactor:WikiEntity',
-    tableName: 'textactor_WikiEntities_v0',
+    tableName: 'textactor_wiki_entities_v1',
     hashKey: 'id',
     schema: {
         id: Joi.string().regex(/^[A-Z]{2}Q\d+$/).required(),

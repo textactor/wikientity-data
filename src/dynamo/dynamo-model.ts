@@ -247,6 +247,21 @@ export class DynamoModel<ID, T extends { id: ID }> {
     }
 }
 
+export interface ModelOptions {
+    dynamodb?: any
+    tableName?: string
+}
+
+export function buildDynamoOptions(dynamoOptions: DynamoModelOptions, modelOptions: ModelOptions) {
+    dynamoOptions = { ...dynamoOptions };
+
+    if (modelOptions.tableName) {
+        dynamoOptions.tableName = modelOptions.tableName;
+    }
+
+    return dynamoOptions;
+}
+
 export type DynamoQueryResult<T> = {
     items?: T[]
     count: number
