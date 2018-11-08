@@ -1,6 +1,6 @@
 
-export { WikiEntityModel } from './dynamo/wikiEntityModel';
+export { WikiEntityModel } from './dynamo/wiki-entity-model';
 
-export { WikiEntityRepository } from './dynamo/wikiEntityRepository';
+export { WikiEntityRepository } from './dynamo/wiki-entity-repository';
 
-export { createTables } from './dynamo/createTables';
+export { createTables } from './dynamo/create-tables';

@@ -1,5 +1,5 @@
 import { IRepository, RepUpdateData } from "@textactor/domain";
-import { DynamoModel } from "./dynamoModel";
+import { DynamoModel } from "./dynamo-model";
 
 export class DynamoRepository<ID, T extends { id: ID }> implements IRepository<ID, T> {
     constructor(protected model: DynamoModel<ID, T>) { }
