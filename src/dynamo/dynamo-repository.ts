@@ -1,25 +1,68 @@
-import { IRepository, RepUpdateData } from "@textactor/domain";
-import { DynamoModel } from "./dynamo-model";
+import {
+    BaseRepository,
+    RepositoryUpdateData,
+    RepositoryAccessOptions,
+    BaseEntity,
+    EntityValidator,
+    Repository,
+} from '@textactor/domain';
 
-export class DynamoRepository<ID, T extends { id: ID }> implements IRepository<ID, T> {
-    constructor(protected model: DynamoModel<ID, T>) { }
 
-    getById(id: ID) {
-        return this.model.getById(id);
+import { sortEntitiesByIds } from '../helpers';
+import { DynamoItem } from 'dynamo-item';
+
+export class DynamoRepository<T extends BaseEntity> extends BaseRepository<T> implements Repository<T> {
+
+    constructor(protected item: DynamoItem<{ id: string }, T>, validator: EntityValidator<T>) {
+        super(validator);
     }
-    getByIds(ids: ID[]): Promise<T[]> {
-        return this.model.getByIds(ids);
+
+    async put(data: T) {
+        data = this.beforeCreate(data);
+        return await this.item.put(data);
     }
-    exists(id: ID): Promise<boolean> {
-        return this.model.getById(id).then(item => !!item);
+
+    async innerCreate(data: T) {
+        return await this.item.create(data);
     }
-    delete(id: ID): Promise<boolean> {
-        return this.model.delete(id);
+
+    async innerUpdate(data: RepositoryUpdateData<T>) {
+        return await this.item.update({
+            remove: data.delete,
+            key: { id: data.id },
+            set: data.set
+        });
     }
-    create(data: T): Promise<T> {
-        return this.model.create(data);
+
+    async delete(id: string) {
+        const oldItem = await this.item.delete({ id });
+        return !!oldItem;
     }
-    update(data: RepUpdateData<ID, T>): Promise<T> {
-        return this.model.update(data);
+
+    async exists(id: string) {
+        const item = await this.getById(id, { fields: ['id'] });
+
+        return !!item;
+    }
+
+    async getById(id: string, options?: RepositoryAccessOptions<T>) {
+        return await this.item.get({ id }, options && { attributes: options.fields as string[] });
+    }
+
+    async getByIds(ids: string[], options?: RepositoryAccessOptions<T>) {
+        const items = await this.item.getItems(ids.map(id => ({ id })), options && { attributes: options.fields as string[] });
+
+        return sortEntitiesByIds(ids, items);
+    }
+
+    async deleteStorage(): Promise<void> {
+        await Promise.all([
+            this.item.deleteTable(),
+        ]);
+    }
+    async createStorage(): Promise<void> {
+        await Promise.all([
+            this.item.createTable(),
+        ]);
     }
 }

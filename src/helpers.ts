@@ -1,3 +1,14 @@
+import { BaseEntity, BaseEntityId } from "@textactor/domain";
 
-export const LANG_REG = /^[a-z]{2}$/;
-export const WIKI_DATA_ID_REG = /^Q\d+$/;
+export function sortEntitiesByIds<T extends BaseEntity>(ids: BaseEntityId[], entities: T[]) {
+    const list: T[] = [];
+    for (const id of ids) {
+        const entity = entities.find(item => item.id === id);
+        if (entity) {
+            list.push(entity);
+        }
+    }
+
+    return list;
+}
+
