@@ -6,4 +6,5 @@ node_modules
 *.tgz
 lib
 types
+dest
 package-lock.json
