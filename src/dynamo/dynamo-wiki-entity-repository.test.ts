@@ -4,7 +4,7 @@ import { launch, stop } from 'dynamodb-local';
 import DynamoDB = require('aws-sdk/clients/dynamodb');
 import { DynamoWikiEntityRepository } from './dynamo-wiki-entity-repository';
 import { WikiEntityHelper, WikiEntity, WikiEntityType } from '@textactor/wikientity-domain';
-import { delay } from '../helpers';
+import { delay } from '@textactor/domain';
 
 
 
